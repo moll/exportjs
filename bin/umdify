@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 var package = require("../package")
+var _ = require("underscore")
 var Umd = require("../")
 
-var USAGE = "Usage: " + package.name + " [options] COMMAND"
+var USAGE = "Usage: " + package.name + " [OPTIONS] COMMAND"
 var OPTIONS = [
   "Options:",
   "  -h, -?, --help  Display this help and exit."
@@ -24,14 +25,29 @@ function help() {
 function info(string) { process.stdout.write((string || "") + "\n") }
 function warn(string) { process.stderr.write((string || "") + "\n") }
 
-var opts = require("nopt")({
-  "help": Boolean
-}, {
-  "h": "help",
-  "?": "help"
-})
-opts.command = opts.argv.remain.shift()
-opts.args = opts.argv.remain
+var opts = (function() {
+  var long = {
+    "help": Boolean
+  }
+  var short = {
+    "h": "help",
+    "?": "help"
+  }
+
+  var opts = require("nopt")(long, short)
+  var unrecognized = _.difference(Object.keys(opts), Object.keys(long), "argv")
+
+  if (unrecognized.length) {
+    warn("Unrecognized option: " + unrecognized[0])
+    warn(USAGE)
+    process.exit(1)
+  }
+
+  opts.command = opts.argv.remain.shift()
+  opts.argv = opts.argv.remain
+
+  return opts
+})()
 
 switch (true) {
   case opts.help:
@@ -42,12 +58,12 @@ switch (true) {
     break
 
   case opts.command == "iife":
-    if (opts.args.length != 1) {
+    if (opts.argv.length != 1) {
       warn(package.name + ": Please give a file to `iife'.")
       process.exit(1)
     }
 
-    umdify(Umd.Iife, opts.args[0])
+    umdify(Umd.Iife, opts.argv[0])
     break
 
   default:
