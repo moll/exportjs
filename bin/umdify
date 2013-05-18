@@ -11,6 +11,7 @@ var OPTIONS = [
 var COMMANDS = [
   "Commands:",
   "  iife FILE  Wrap in an immediately-invoked function expression.",
+  "  iffy FILE  Alias of iife.",
   "  help       Display this help and exit."
 ].join("\n")
 
@@ -58,6 +59,7 @@ switch (true) {
     break
 
   case opts.command == "iife":
+  case opts.command == "iffy":
     if (opts.argv.length != 1) {
       warn(package.name + ": Please give a file to `iife'.")
       process.exit(1)
