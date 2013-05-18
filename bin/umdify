@@ -51,7 +51,7 @@ switch (true) {
     break
 
   default:
-    warn("Unrecognized command(s): " + opts.command)
+    warn("Unrecognized command: " + opts.command)
     warn(USAGE)
     process.exit(1)
 }
