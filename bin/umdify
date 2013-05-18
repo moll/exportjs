@@ -15,15 +15,15 @@ var app = new Args(package.name, {
       "  -h, -?, --help  Display this help and exit.",
       "",
       "Commands:",
-      "  iife  Wrap in an immediately-invoked function expression.",
-      "  iffy  Alias of iife.",
+      "  iffy  Wrap in an immediately-invoked function expression.",
+      "  iife  Alias of iffy.",
       "",
       "Use \"--help COMMAND\" for more information on a specific command.",
       "For more help or to give feedback, please see: " + package.homepage,
     ]
   },
 
-  iife: {
+  iffy: {
     usage: "[OPTION]... FILE",
     options: {global: Boolean},
     aliases: {g: "--global"},
@@ -34,7 +34,7 @@ var app = new Args(package.name, {
       "  -h, -?, --help  Display this help and exit."
     ]
   },
-  iffy: "iife"
+  iife: "iffy"
 }).parse()
 
 if (app.cmd == "help" || app.opts.help || !app.cmd) {
@@ -44,10 +44,10 @@ if (app.cmd == "help" || app.opts.help || !app.cmd) {
 }
 
 switch (app.cmd) {
-  case "iife":
+  case "iffy":
     if (app.argv.length == 0) app.help(info), process.exit()
     if (app.argv.length != 1) die("Please pass a single file.")
-    umdify(Umd.Iife, app.opts, app.argv[0])
+    umdify(Umd.Iffy, app.opts, app.argv[0])
     break
 
   default:
