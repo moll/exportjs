@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var package = require("./package")
+var package = require("../package")
 
 var USAGE = "Usage: " + package.name + " [options] COMMAND"
 var OPTIONS = [

@@ -8,7 +8,7 @@
 		"url": "http://themoll.com"
 	},
 
-	"bin": "cli.js",
+	"bin": "bin/umdify",
 
 	"dependencies": {
 		"nopt": "2.1.x"
