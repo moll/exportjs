@@ -1,6 +1,7 @@
 {
 	"name": "umdify",
 	"version": "0.0.0",
+	"homepage": "https://github.com/moll/umdify",
 
 	"author": {
 		"name": "Andri Möll",

@@ -1,76 +1,58 @@
 #!/usr/bin/env node
-var package = require("../package")
 var _ = require("underscore")
+var Args = require("../lib/args")
 var Umd = require("../")
+var package = require("../package")
 
-var USAGE = "Usage: " + package.name + " [OPTIONS] COMMAND"
-var OPTIONS = [
-  "Options:",
-  "  -h, -?, --help  Display this help and exit."
-].join("\n")
-var COMMANDS = [
-  "Commands:",
-  "  iife FILE  Wrap in an immediately-invoked function expression.",
-  "  iffy FILE  Alias of iife.",
-  "  help       Display this help and exit."
-].join("\n")
+var app = new Args(package.name, {
+  default: {
+    usage: "COMMAND [OPTION]...",
+    options: {help: Boolean},
+    aliases: {h: "--help", "?": "--help"},
 
-function help() {
-  info(USAGE)
-  info()
-  info(OPTIONS)
-  info()
-  info(COMMANDS)
+    help: [
+      "Options:",
+      "  -h, -?, --help  Display this help and exit.",
+      "",
+      "Commands:",
+      "  iife  Wrap in an immediately-invoked function expression.",
+      "  iffy  Alias of iife.",
+      "",
+      "Use \"--help COMMAND\" for more information on a specific command.",
+      "For more help or to give feedback, please see: " + package.homepage,
+    ]
+  },
+
+  iife: {
+    usage: "[OPTION]... FILE",
+    help: [
+      "Options:",
+      "  -h, -?, --help  Display this help and exit."
+    ]
+  },
+  iffy: "iife"
+}).parse()
+
+if (app.cmd == "help" || app.opts.help || !app.cmd) {
+  app.cmd = app.argv.shift()
+  app.help()
+  process.exit()
 }
 
-function info(string) { process.stdout.write((string || "") + "\n") }
-function warn(string) { process.stderr.write((string || "") + "\n") }
-
-var opts = (function() {
-  var long = {
-    "help": Boolean
-  }
-  var short = {
-    "h": "help",
-    "?": "help"
-  }
-
-  var opts = require("nopt")(long, short)
-  var unrecognized = _.difference(Object.keys(opts), Object.keys(long), "argv")
-
-  if (unrecognized.length) {
-    warn("Unrecognized option: " + unrecognized[0])
-    warn(USAGE)
-    process.exit(1)
-  }
-
-  opts.command = opts.argv.remain.shift()
-  opts.argv = opts.argv.remain
-
-  return opts
-})()
-
-switch (true) {
-  case opts.help:
-  case !opts.command:
-  case opts.command == "help":
-    help()
-    process.exit()
-    break
-
-  case opts.command == "iife":
-  case opts.command == "iffy":
-    if (opts.argv.length != 1) {
-      warn(package.name + ": Please give a file to `iife'.")
+switch (app.cmd) {
+  case "iife":
+    if (app.argv.length != 1) {
+      warn("Please pass a single file.")
+      app.usage(warn)
       process.exit(1)
     }
 
-    umdify(Umd.Iife, opts.argv[0])
+    umdify(Umd.Iife, app.argv[0])
     break
 
   default:
-    warn("Unrecognized command: " + opts.command)
-    warn(USAGE)
+    warn("Unrecognized command: " + app.cmd)
+    app.usage(warn)
     process.exit(1)
 }
 
@@ -84,3 +66,6 @@ function umdify(klass, file) {
     process.exit(1)
   }
 }
+
+function info(string) { process.stdout.write((string || "") + "\n") }
+function warn(string) { process.stderr.write((string || "") + "\n") }
