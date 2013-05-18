@@ -41,19 +41,13 @@ if (app.cmd == "help" || app.opts.help || !app.cmd) {
 
 switch (app.cmd) {
   case "iife":
-    if (app.argv.length != 1) {
-      warn("Please pass a single file.")
-      app.usage(warn)
-      process.exit(1)
-    }
-
+    if (app.argv.length == 0) app.help(info), process.exit()
+    if (app.argv.length != 1) die("Please pass a single file.")
     umdify(Umd.Iife, app.argv[0])
     break
 
   default:
-    warn("Unrecognized command: " + app.cmd)
-    app.usage(warn)
-    process.exit(1)
+    die("Unrecognized command: " + app.cmd)
 }
 
 function umdify(klass, file) {
@@ -69,3 +63,9 @@ function umdify(klass, file) {
 
 function info(string) { process.stdout.write((string || "") + "\n") }
 function warn(string) { process.stderr.write((string || "") + "\n") }
+
+function die(string) { 
+  warn(string)
+  app.usage(warn)
+  process.exit(1)
+}
