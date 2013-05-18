@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 var package = require("../package")
+var Umd = require("../")
 
 var USAGE = "Usage: " + package.name + " [options] COMMAND"
 var OPTIONS = [
@@ -8,7 +9,8 @@ var OPTIONS = [
 ].join("\n")
 var COMMANDS = [
   "Commands:",
-  "  help  Display this help and exit."
+  "  iife FILE  Wrap in an immediately-invoked function expression.",
+  "  help       Display this help and exit."
 ].join("\n")
 
 function help() {
@@ -28,19 +30,39 @@ var opts = require("nopt")({
   "h": "help",
   "?": "help"
 })
+opts.command = opts.argv.remain.shift()
 opts.args = opts.argv.remain
-opts.command = opts.argv.remain[0]
 
 switch (true) {
-  case !opts.args.length:
   case opts.help:
+  case !opts.command:
   case opts.command == "help":
     help()
     process.exit()
     break
 
+  case opts.command == "iife":
+    if (opts.args.length != 1) {
+      warn(package.name + ": Please give a file to `iife'.")
+      process.exit(1)
+    }
+
+    umdify(Umd.Iife, opts.args[0])
+    break
+
   default:
-    warn("Unrecognized command(s): " + opts.args.join(" "))
+    warn("Unrecognized command(s): " + opts.command)
     warn(USAGE)
     process.exit(1)
+}
+
+function umdify(klass, file) {
+  try {
+    var output = new klass().wrap(file)
+    process.stdout.write(output)
+  }
+  catch (ex) {
+    warn(package.name + ": " + ex)
+    process.exit(1)
+  }
 }
