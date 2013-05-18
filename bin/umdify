@@ -25,8 +25,12 @@ var app = new Args(package.name, {
 
   iife: {
     usage: "[OPTION]... FILE",
+    options: {global: Boolean},
+    aliases: {g: "--global"},
+
     help: [
       "Options:",
+      '  -g, --global   Pass the global context in as "global" and "root".',
       "  -h, -?, --help  Display this help and exit."
     ]
   },
@@ -43,16 +47,16 @@ switch (app.cmd) {
   case "iife":
     if (app.argv.length == 0) app.help(info), process.exit()
     if (app.argv.length != 1) die("Please pass a single file.")
-    umdify(Umd.Iife, app.argv[0])
+    umdify(Umd.Iife, app.opts, app.argv[0])
     break
 
   default:
     die("Unrecognized command: " + app.cmd)
 }
 
-function umdify(klass, file) {
+function umdify(klass, opts, file) {
   try {
-    var output = new klass().wrap(file)
+    var output = new klass(opts).wrap(file)
     process.stdout.write(output)
   }
   catch (ex) {
