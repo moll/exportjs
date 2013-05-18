@@ -1,0 +1,16 @@
+{
+	"name": "umdify",
+	"version": "0.0.0",
+
+	"author": {
+		"name": "Andri Möll",
+		"email": "andri@dot.ee",
+		"url": "http://themoll.com"
+	},
+
+	"bin": "cli.js",
+
+	"dependencies": {
+		"nopt": "2.1.x"
+	}
+}
