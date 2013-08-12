@@ -30,7 +30,7 @@ var app = new Args(package.name, {
 
     help: [
       "Options:",
-      '  -g, --global   Pass the global context in as "global" and "root".',
+      '  -g, --global    Pass the global context in as "global" and "root".',
       "  -h, -?, --help  Display this help and exit."
     ]
   },
