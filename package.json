@@ -1,6 +1,8 @@
 {
 	"name": "export",
+	"title": "ExportJS",
 	"version": "0.0.0",
+	"preferGlobal": true,
 
 	"author": {
 		"name": "Andri Möll",
