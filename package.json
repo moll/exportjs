@@ -11,7 +11,7 @@
 	},
 
 	"main": "index.js",
-	"bin": "bin/exportjs",
+	"bin": {"exportjs": "./bin/exportjs"},
 
 	"dependencies": {
 		"nopt": "2.1.x",
