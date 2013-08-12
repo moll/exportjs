@@ -1,7 +1,6 @@
 {
-	"name": "umdify",
+	"name": "export",
 	"version": "0.0.0",
-	"homepage": "https://github.com/moll/umdify",
 
 	"author": {
 		"name": "Andri Möll",
@@ -10,7 +9,7 @@
 	},
 
 	"main": "index.js",
-	"bin": "bin/umdify",
+	"bin": "bin/exportjs",
 
 	"dependencies": {
 		"nopt": "2.1.x",

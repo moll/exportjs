@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 var _ = require("underscore")
 var Args = require("../lib/args")
-var Umd = require("../")
+var Export = require("../")
 var package = require("../package")
 
 var app = new Args(package.name, {
@@ -47,14 +47,14 @@ switch (app.cmd) {
   case "iffy":
     if (app.argv.length == 0) app.help(info), process.exit()
     if (app.argv.length != 1) die("Please pass a single file.")
-    umdify(Umd.Iffy, app.opts, app.argv[0])
+    run(Export.Iffy, app.opts, app.argv[0])
     break
 
   default:
     die("Unrecognized command: " + app.cmd)
 }
 
-function umdify(klass, opts, file) {
+function run(klass, opts, file) {
   try {
     var output = new klass(opts).wrap(file)
     process.stdout.write(output)
