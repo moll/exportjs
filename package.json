@@ -3,6 +3,8 @@
 	"title": "ExportJS",
 	"version": "0.1.337",
 	"description": "A tool that helps you publish and export your JavaScripts to other environments by wrapping them in an IIFE. Or UMD in the future.",
+	"homepage": "https://github.com/moll/exportjs",
+	"bugs": "https://github.com/moll/exportjs/issues",
 	"preferGlobal": true,
 
 	"author": {
@@ -11,7 +13,15 @@
 		"url": "http://themoll.com"
 	},
 
-	"license": "LAGPL",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/moll/exportjs.git"
+	},
+
+	"licenses": [{
+		"type": "LAGPL",
+		"url": "https://github.com/moll/exportjs/blob/master/LICENSE"
+	}],
 
 	"main": "index.js",
 	"bin": {"exportjs": "./bin/exportjs"},

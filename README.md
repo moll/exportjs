@@ -41,4 +41,4 @@ About
 **[Andri Möll](http://themoll.com)** typed this and the code.  
 [Monday Calendar](http://mondayapp.com) supported the engineering work.
 
-If you find ExportJS needs improving, please don't hesitate to type to me now at [andri@dot.ee](mailto:andri@dot.ee).
+If you find ExportJS needs improving, please don't hesitate to type to me now at [andri@dot.ee](mailto:andri@dot.ee) or [create an issue online](https://github.com/moll/exportjs/issues).
